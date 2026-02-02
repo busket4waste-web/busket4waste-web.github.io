@@ -80,7 +80,7 @@
       const chipVal = (chip.dataset.value || '').trim().toLowerCase();
       const isPreset = [
         'телефон', 'ремонт', 'отпуск', 'обучение', 'подарок',
-        'долги / кредиты', 'другое',
+        'транспорт', 'экипировка', 'семья', 'накопления', 'другое',
       ].includes(chipVal);
       const matches = isPreset && chipVal === normalized;
       chip.classList.toggle('chip_active', matches);
@@ -121,7 +121,17 @@
     testSubmitStatus.classList.toggle('hidden', !message);
   }
 
+  function disableSubmitButton() {
+    if (btnSubmitTest) {
+      btnSubmitTest.disabled = true;
+      btnSubmitTest.setAttribute('aria-disabled', 'true');
+    }
+  }
+
   function submitOrCopyTest() {
+    if (btnSubmitTest && btnSubmitTest.disabled) return;
+    disableSubmitButton();
+
     const payload = getTestPayload();
     const text = getTestPayloadText();
 
